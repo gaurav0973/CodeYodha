@@ -50,3 +50,27 @@ export const onBoardUserToDatabase = async () => {
     };
   }
 };
+
+
+export const getCurrentUserRole = async () => {
+    try {
+        const user = await currentUser()
+        if (!user) {
+            return {
+                success: false,
+                error: "No authenticated user found"
+            }
+        }
+        const {id} = user
+        const userRole = await prisma.user.findUnique({
+            where: {clerkId: id},
+            select: {role: true}
+        })
+        return userRole?.role || null
+    } catch (error) {
+        return {
+            success: false,
+            error: "Failed to fetch user role"
+        }
+    }
+}
