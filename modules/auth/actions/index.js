@@ -43,7 +43,7 @@ export const onBoardUserToDatabase = async () => {
       message: "User on-boarded successfully",
     };
   } catch (error) {
-    console.error("Error while on-boarding user:", error);
+    // console.error("Error while on-boarding user:", error);
     return {
       success: false,
       error: "Failed to on-board user to database",
