@@ -74,3 +74,13 @@ export const getCurrentUserRole = async () => {
         }
     }
 }
+
+
+export const getCurrentUser = async () =>{
+  const user = await currentUser();
+  const dbUser = await prisma.user.findUnique({
+    where: { clerkId: user?.id },
+    select: {id: true}
+  })
+  return dbUser;
+}
