@@ -21,7 +21,7 @@ model User {
   lastName  String?
   imageUrl  String?
   problems  Problem[]
-
+  solvedProblems ProblemSolved[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -57,6 +57,22 @@ model Problem {
 
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  solvedBy ProblemSolved[]
 
   @@index([difficulty])
+}
+
+
+model ProblemSolved{
+  id String @id @default(uuid())
+  userId String
+  problemId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, problemId])
 }

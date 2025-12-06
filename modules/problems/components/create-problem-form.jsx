@@ -256,7 +256,7 @@ export default function CreateProblemForm() {
       // C. Scroll to the top of the page to simulate a fresh load
       window.scrollTo({ top: 0, behavior: "smooth" });
 
-      // D. Removed: router.push("/problems"); 
+        router.push("/problems"); 
       
       // --- RESET LOGIC ENDS HERE ---
 

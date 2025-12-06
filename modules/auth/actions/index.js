@@ -81,7 +81,7 @@ export const getCurrentUser = async () =>{
   // console.log("Current authenticated user in getCurrentUser:", user);
   const dbUser = await prisma.user.findUnique({
     where: { clerkId: user?.id },
-    select: {id: true}
+    select: {id: true, role:true}
   })
   // console.log("Database user fetched in getCurrentUser:", dbUser);
   return dbUser;

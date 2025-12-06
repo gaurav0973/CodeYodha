@@ -13,17 +13,17 @@ enum UserRole {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  clerkId   String    @unique
-  email     String    @unique
-  role      UserRole  @default(USER)
-  firstName String?
-  lastName  String?
-  imageUrl  String?
-  problems  Problem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String          @id @default(uuid())
+  clerkId        String          @unique
+  email          String          @unique
+  role           UserRole        @default(USER)
+  firstName      String?
+  lastName       String?
+  imageUrl       String?
+  problems       Problem[]
+  solvedProblems ProblemSolved[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@index([role])
 }
@@ -54,7 +54,22 @@ model Problem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  solvedBy ProblemSolved[]
 
   @@index([difficulty])
+}
+
+model ProblemSolved {
+  id        String @id @default(uuid())
+  userId    String
+  problemId String
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, problemId])
 }
