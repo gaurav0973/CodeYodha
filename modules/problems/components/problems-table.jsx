@@ -92,7 +92,7 @@ export default function ProblemsTable({ problems = [], user }) {
   };
 
   const handleShare = (problemId) => {
-    const url = `${window.location.origin}/problems/${problemId}`;
+    const url = `${window.location.origin}/problem/${problemId}`;
     navigator.clipboard.writeText(url);
     toast.success("Link Copied!", {
       description: "Problem link has been copied to your clipboard.",
@@ -100,7 +100,7 @@ export default function ProblemsTable({ problems = [], user }) {
   };
 
   const handleRowClick = (problemId) => {
-    router.push(`/problems/${problemId}`);
+    router.push(`/problem/${problemId}`);
   };
 
   const handleDeleteClick = (problemId) => {
@@ -196,7 +196,7 @@ export default function ProblemsTable({ problems = [], user }) {
                   {/* Title Column */}
                   <TableCell className="font-medium">
                     <Link
-                      href={`/problems/${problem.id}`}
+                      href={`/problem/${problem.id}`}
                       className="hover:text-orange-600 hover:underline flex items-center gap-2"
                       onClick={(e) => e.stopPropagation()}
                     >
@@ -245,7 +245,7 @@ export default function ProblemsTable({ problems = [], user }) {
                         className="hidden sm:flex"
                         asChild
                       >
-                        <Link href={`/problems/${problem.id}`}>
+                        <Link href={`/problem/${problem.id}`}>
                           Solve <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
@@ -264,7 +264,7 @@ export default function ProblemsTable({ problems = [], user }) {
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() =>
-                              router.push(`/problems/${problem.id}`)
+                              router.push(`/problem/${problem.id}`)
                             }
                           >
                             <Code2 className="mr-2 h-4 w-4" /> View Problem

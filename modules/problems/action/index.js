@@ -2,6 +2,11 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+import {
+  getJudge0LanguageId,
+  submitBatchToJudge0,
+  pollAndGetBatchResultsFromJudge0,
+} from "@/lib/judge0";
 
 export const getAllProblems = async () => {
   try {
@@ -92,6 +97,49 @@ export const deleteProblemById = async (problemId) => {
     return {
       success: false,
       error: "Failed to delete problem",
+    };
+  }
+};
+
+export const runCode = async ({ code, language, testCases }) => {
+  try {
+    const languageId = getJudge0LanguageId(language);
+    if (!languageId) {
+      throw new Error("Unsupported language");
+    }
+
+    // Ensure testCases is an array
+    const cases = Array.isArray(testCases) ? testCases : [];
+    if (cases.length === 0) {
+      throw new Error("No test cases provided");
+    }
+
+    // Prepare submissions for each test case
+    const submissions = cases.map((tc) => ({
+      source_code: code,
+      language_id: languageId,
+      stdin: tc.input,
+      expected_output: tc.output,
+    }));
+
+    // Submit to Judge0
+    const submissionResponse = await submitBatchToJudge0(submissions);
+
+    // Extract tokens
+    const tokens = submissionResponse.map((s) => s.token);
+
+    // Poll for results
+    const results = await pollAndGetBatchResultsFromJudge0(tokens);
+
+    return {
+      success: true,
+      data: results,
+    };
+  } catch (error) {
+    console.error("Error in runCode:", error);
+    return {
+      success: false,
+      error: error.message || "Failed to run code",
     };
   }
 };
