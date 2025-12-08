@@ -22,6 +22,7 @@ model User {
   imageUrl  String?
   problems  Problem[]
   solvedProblems ProblemSolved[]
+  submissions Submission[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -57,9 +58,55 @@ model Problem {
 
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissions Submission[]
   solvedBy ProblemSolved[]
 
   @@index([difficulty])
+}
+
+model Submission{
+  id String @id @default(uuid())
+  userId String
+  problemId String
+  sourceCode String
+  language String
+  stdin String?
+  stdout String?
+  stderr String?
+  compiledOutput String?
+  status String // e.g., "Accepted", "Wrong Answer"
+  memory String?
+  time String?
+  createdAt DateTime @default(now())
+
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  testCaseResults TestCaseResult[]
+
+  @@index([status])
+}
+
+
+model TestCaseResult{
+  id String @id @default(uuid())
+  submissionId String
+  testCase Int
+  passed Boolean
+  stdout String?
+  expected String?
+  stderr String?
+  compiledOutput String?
+  status String // e.g., "Passed", "Failed"
+  memory String?
+  time String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([submissionId])
 }
 
 
@@ -76,3 +123,5 @@ model ProblemSolved{
 
   @@unique([userId, problemId])
 }
+
+
