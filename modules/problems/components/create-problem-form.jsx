@@ -229,7 +229,6 @@ export default function CreateProblemForm() {
 
   // --- Logic to Load Sample Data ---
   const handleLoadSample = () => {
-    // We must transform the tags array ["DP", "Math"] -> "DP, Math" string
     const formattedData = {
       ...sampledpData,
       tags: sampledpData.tags.join(", "),

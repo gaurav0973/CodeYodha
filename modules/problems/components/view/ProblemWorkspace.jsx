@@ -25,6 +25,7 @@ export default function ProblemWorkspace({ problem }) {
   const [isRunning, setIsRunning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [runResult, setRunResult] = useState(null);
+  const [submissionCount, setSubmissionCount] = useState(0);
 
   const handleRun = async () => {
     setIsRunning(true);
@@ -61,6 +62,7 @@ export default function ProblemWorkspace({ problem }) {
 
       if (result.success) {
         setRunResult(result.data);
+        setSubmissionCount((prev) => prev + 1);
         if (result.isAccepted) {
           toast.success("Accepted! All test cases passed.");
         } else {
@@ -89,7 +91,10 @@ export default function ProblemWorkspace({ problem }) {
             maxSize={75}
             className="mr-1"
           >
-            <ProblemDescription problem={problem} />
+            <ProblemDescription
+              problem={problem}
+              submissionCount={submissionCount}
+            />
           </ResizablePanel>
 
           <ResizableHandle withHandle className="bg-transparent w-1" />

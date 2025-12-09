@@ -12,8 +12,9 @@ import {
   CheckCircle2,
   Info,
 } from "lucide-react";
+import SubmissionHistory from "./SubmissionHistory";
 
-export default function ProblemDescription({ problem }) {
+export default function ProblemDescription({ problem, submissionCount }) {
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case "EASY":
@@ -171,10 +172,13 @@ export default function ProblemDescription({ problem }) {
           </div>
         </TabsContent>
 
-        <TabsContent value="submissions" className="p-6">
-          <div className="flex items-center justify-center h-full text-muted-foreground">
-            Your submissions history...
-          </div>
+        <TabsContent value="submissions" className="p-6 h-full overflow-hidden">
+          <ScrollArea className="h-full">
+            <SubmissionHistory
+              problemId={problem.id}
+              submissionCount={submissionCount}
+            />
+          </ScrollArea>
         </TabsContent>
       </Tabs>
     </div>

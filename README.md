@@ -40,4 +40,9 @@ Progress
     - Challenges faced :
         - Integrating code editor (Monaco Editor)
         - Handling multiple programming languages
-        - Submitting code to Judge0 and displaying results 
+        - Submitting code to Judge0 and displaying results
+- Fetching and Displaying User Submissions
+    - Challenges faced :
+        - Designing submission schema in DB
+        - Fetching user submissions efficiently
+        - Displaying submission history with status and timestamps 
