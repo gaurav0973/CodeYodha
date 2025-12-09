@@ -10,12 +10,18 @@ import ProblemHeader from "./ProblemHeader";
 import ProblemDescription from "./ProblemDescription";
 import CodeEditor from "./CodeEditor";
 import Console from "./Console";
-import { runCode } from "@/modules/problems/action";
+import { runCode, submitCode } from "@/modules/problems/action";
 import { toast } from "sonner";
 
 export default function ProblemWorkspace({ problem }) {
   const [language, setLanguage] = useState("JAVASCRIPT");
-  const [code, setCode] = useState(problem.codeSnippets?.["JAVASCRIPT"] || "");
+  const [code, setCode] = useState(() => {
+    const snippets = problem.codeSnippets || {};
+    const key = Object.keys(snippets).find(
+      (k) => k.toUpperCase() === "JAVASCRIPT"
+    );
+    return key ? snippets[key] : "";
+  });
   const [isRunning, setIsRunning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [runResult, setRunResult] = useState(null);
@@ -45,11 +51,29 @@ export default function ProblemWorkspace({ problem }) {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    // Simulate submit for now as we don't have a submit action yet
-    setTimeout(() => {
+    setRunResult(null);
+    try {
+      const result = await submitCode({
+        code,
+        language,
+        problemId: problem.id,
+      });
+
+      if (result.success) {
+        setRunResult(result.data);
+        if (result.isAccepted) {
+          toast.success("Accepted! All test cases passed.");
+        } else {
+          toast.error("Wrong Answer. Some test cases failed.");
+        }
+      } else {
+        toast.error(result.error);
+      }
+    } catch (error) {
+      toast.error("Something went wrong during submission");
+    } finally {
       setIsSubmitting(false);
-      toast.info("Submit functionality coming soon!");
-    }, 2000);
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -23,6 +23,12 @@ export default function Console({
   submitResult,
 }) {
   const [activeTab, setActiveTab] = useState("testcase");
+
+  useEffect(() => {
+    if (runResult) {
+      setActiveTab("result");
+    }
+  }, [runResult]);
 
   return (
     <div className="flex flex-col h-full bg-card rounded-xl overflow-hidden border shadow-sm">
@@ -92,7 +98,7 @@ export default function Console({
                 {runResult ? (
                   <div className="space-y-6">
                     {runResult.map((res, index) => {
-                      const isAccepted = res.status.id === 3; // 3 is Accepted
+                      const isAccepted = res.passed;
                       return (
                         <div
                           key={index}
@@ -102,7 +108,7 @@ export default function Console({
                             <div
                               className={`text-sm font-medium ${isAccepted ? "text-green-500" : "text-red-500"}`}
                             >
-                              Case {index + 1}: {res.status.description}
+                              Case {index + 1}: {res.status}
                             </div>
                           </div>
                           {!isAccepted && res.compile_output && (
@@ -131,7 +137,14 @@ export default function Console({
                               <div
                                 className={`${isAccepted ? "bg-green-500/10 border-green-500/20" : "bg-red-500/10 border-red-500/20"} p-2 rounded-md text-xs font-mono border whitespace-pre-wrap`}
                               >
-                                {res.stdout || "No output"}
+                                {res.stdout ? (
+                                  res.stdout
+                                ) : (
+                                  <span className="text-muted-foreground italic flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-yellow-500/50 inline-block" />
+                                    No output captured. Did you print to stdout?
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </div>

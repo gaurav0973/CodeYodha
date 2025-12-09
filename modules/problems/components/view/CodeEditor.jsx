@@ -22,8 +22,16 @@ export default function CodeEditor({
 }) {
   const handleLanguageChange = (newLang) => {
     setLanguage(newLang);
-    // Optional: Reset code to snippet for new language if needed
-    // onChange(codeSnippets[newLang] || "");
+    if (codeSnippets) {
+      const snippetKey = Object.keys(codeSnippets).find(
+        (key) => key.toUpperCase() === newLang.toUpperCase()
+      );
+      if (snippetKey) {
+        onChange(codeSnippets[snippetKey]);
+      } else {
+        onChange("");
+      }
+    }
   };
 
   return (
@@ -56,7 +64,14 @@ export default function CodeEditor({
             variant="ghost"
             size="icon"
             className="h-7 w-7 text-muted-foreground hover:text-foreground"
-            onClick={() => onChange(codeSnippets[language] || "")}
+            onClick={() => {
+              if (codeSnippets) {
+                const snippetKey = Object.keys(codeSnippets).find(
+                  (key) => key.toUpperCase() === language.toUpperCase()
+                );
+                onChange(snippetKey ? codeSnippets[snippetKey] : "");
+              }
+            }}
           >
             <RefreshCw className="h-4 w-4" />
           </Button>

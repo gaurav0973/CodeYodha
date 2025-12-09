@@ -6,9 +6,7 @@ import {
 } from "@/lib/judge0";
 import prisma from "@/lib/prisma";
 import { getCurrentUser, getCurrentUserRole } from "@/modules/auth/actions";
-import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { success } from "zod";
 
 // 1. get all fields from the request
 // 2. validations
@@ -49,6 +47,7 @@ export async function POST(request) {
       !description ||
       !difficulty ||
       !tags ||
+      !examples ||
       !codeSnippets ||
       !referenceSolution ||
       !constraints ||

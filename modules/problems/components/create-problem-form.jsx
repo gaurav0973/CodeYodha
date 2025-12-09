@@ -58,9 +58,9 @@ const sampledpData = {
     { input: "4", output: "5" },
   ],
   codeSnippets: {
-    JAVASCRIPT: `/**\n * @param {number} n\n * @return {number}\n */\nfunction climbStairs(n) {\n  // Write your code here\n}`,
-    PYTHON: `class Solution:\n    def climbStairs(self, n: int) -> int:\n        # Write your code here\n        pass`,
-    JAVA: `class Solution {\n    public int climbStairs(int n) {\n        return 0;\n    }\n}`,
+    JAVASCRIPT: `const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf-8').trim();\n\n/**\n * @param {number} n\n * @return {number}\n */\nfunction climbStairs(n) {\n  // Write your code here\n}\n\n// Main execution\nconst n = parseInt(input);\nconsole.log(climbStairs(n));`,
+    PYTHON: `import sys\n\nclass Solution:\n    def climbStairs(self, n: int) -> int:\n        # Write your code here\n        pass\n\nif __name__ == "__main__":\n    input = sys.stdin.read().strip()\n    n = int(input)\n    solution = Solution()\n    print(solution.climbStairs(n))`,
+    JAVA: `import java.util.Scanner;\n\nclass Solution {\n    public int climbStairs(int n) {\n        // Write your code here\n        return 0;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        Solution solution = new Solution();\n        System.out.println(solution.climbStairs(n));\n        scanner.close();\n    }\n}`,
   },
   referenceSolution: {
     JAVASCRIPT: `function climbStairs(n) {
@@ -235,7 +235,7 @@ export default function CreateProblemForm() {
       toast.success("Problem Created Successfully!");
 
       // --- RESET LOGIC STARTS HERE ---
-      
+
       // A. Reset the form to initial default values
       form.reset({
         title: "",
@@ -256,10 +256,9 @@ export default function CreateProblemForm() {
       // C. Scroll to the top of the page to simulate a fresh load
       window.scrollTo({ top: 0, behavior: "smooth" });
 
-        router.push("/problems"); 
-      
-      // --- RESET LOGIC ENDS HERE ---
+      router.push("/problems");
 
+      // --- RESET LOGIC ENDS HERE ---
     } catch (error) {
       console.error("Submission Error:", error);
 
