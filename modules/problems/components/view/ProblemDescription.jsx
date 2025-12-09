@@ -100,41 +100,6 @@ export default function ProblemDescription({ problem }) {
 
               {/* Description Body */}
               <div className="prose dark:prose-invert max-w-none text-sm leading-relaxed">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800 mb-6">
-                  <h4 className="text-blue-800 dark:text-blue-300 font-semibold flex items-center gap-2 mb-2 text-sm">
-                    <Info className="w-4 h-4" /> Standard I/O Required
-                  </h4>
-                  <p className="text-xs text-blue-700 dark:text-blue-400 mb-3">
-                    Your code must read the input from <code>stdin</code> and
-                    print the output to <code>stdout</code>. Do not just return
-                    a value.
-                  </p>
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="bg-background/50 p-2 rounded border border-blue-200 dark:border-blue-800/50">
-                      <p className="text-[10px] font-semibold text-muted-foreground mb-1">
-                        JavaScript Example:
-                      </p>
-                      <pre className="text-[10px] font-mono overflow-x-auto">
-                        {`const fs = require('fs');
-const input = fs.readFileSync(0, 'utf-8').trim();
-// Process input and print result
-console.log(result);`}
-                      </pre>
-                    </div>
-                    <div className="bg-background/50 p-2 rounded border border-blue-200 dark:border-blue-800/50">
-                      <p className="text-[10px] font-semibold text-muted-foreground mb-1">
-                        Python Example:
-                      </p>
-                      <pre className="text-[10px] font-mono overflow-x-auto">
-                        {`import sys
-input = sys.stdin.read().strip()
-# Process input and print result
-print(result)`}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="whitespace-pre-wrap font-sans">
                   {problem.description}
                 </div>
