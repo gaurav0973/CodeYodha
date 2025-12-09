@@ -7,8 +7,7 @@ import {
   submitBatchToJudge0,
   pollAndGetBatchResultsFromJudge0,
 } from "@/lib/judge0";
-import { use } from "react";
-import { NextResponse } from "next/server";
+
 
 export const getAllProblems = async () => {
   try {

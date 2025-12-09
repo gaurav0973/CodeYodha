@@ -185,7 +185,7 @@ export default function Console({
           <Button
             variant="secondary"
             size="sm"
-            className="min-w-[80px] rounded-full font-medium"
+            className="min-w-20 rounded-full font-medium"
             onClick={onRun}
             disabled={isRunning}
           >
@@ -198,7 +198,7 @@ export default function Console({
           </Button>
           <Button
             size="sm"
-            className="min-w-[80px] bg-orange-600 hover:bg-orange-700 text-white rounded-full font-medium shadow-md shadow-orange-500/20"
+            className="min-w-20 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-medium shadow-md shadow-orange-500/20"
             onClick={onSubmit}
             disabled={isSubmitting}
           >

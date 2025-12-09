@@ -31,7 +31,7 @@ export default async function Home() {
       {/* --- HERO SECTION: PATTERN FOCUSED --- */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-4 flex flex-col items-center text-center overflow-hidden">
         {/* Subtle Grid Background */}
-        <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-[#0a0a0a] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+        <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-[#0a0a0a] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-orange-500/15 blur-[120px] rounded-full -z-10" />
 
         <Badge variant="outline" className="mb-6 py-1.5 px-4 text-sm border-orange-500/30 text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/20">
@@ -39,12 +39,12 @@ export default async function Home() {
         </Badge>
 
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-5xl mb-6">
-          Don't Just Solve. <br className="hidden md:block" />
-          Master the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">Underlying Patterns</span>.
+          Do not Just Solve. <br className="hidden md:block" />
+          Master the <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-500 to-red-500">Underlying Patterns</span>.
         </h1>
 
         <p className="text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-          The secret to cracking coding interviews isn't solving 1000 problems. It's mastering the <strong>15-20 core coding patterns</strong>. We provide the structured roadmap you need.
+          The secret to cracking coding interviews is not solving 1000 problems. It is mastering the <strong>15-20 core coding patterns</strong>. We provide the structured roadmap you need.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
@@ -66,7 +66,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
                 <h2 className="text-3xl font-bold mb-4">Why CodeYodha?</h2>
-                <p className="text-muted-foreground">We focus on the "Aha!" moments that stick with you.</p>
+                <p className="text-muted-foreground">We focus on the <strong>Aha!</strong> moments that stick with you.</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -75,7 +75,7 @@ export default async function Home() {
                         <BrainCircuit className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
                     <h3 className="text-xl font-semibold mb-2">Pattern Recognition</h3>
-                    <p className="text-muted-foreground">Don't memorize solutions. Learn to recognize when to use a Sliding Window vs. Two Pointers.</p>
+                    <p className="text-muted-foreground">Do not memorize solutions. Learn to recognize when to use a Sliding Window vs. Two Pointers.</p>
                 </div>
                 <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border shadow-sm">
                     <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full mb-4">
@@ -148,7 +148,7 @@ export default async function Home() {
 
       {/* --- CTA SECTION --- */}
       <section className="py-20 px-4 text-center">
-        <div className="max-w-3xl mx-auto bg-gradient-to-b from-muted/50 to-muted/10 p-10 rounded-3xl border">
+        <div className="max-w-3xl mx-auto bg-linear-to-b from-muted/50 to-muted/10 p-10 rounded-3xl border">
             <Lightbulb className="w-12 h-12 text-yellow-500 mx-auto mb-6" />
             <h2 className="text-3xl font-bold mb-4">Ready to Level Up?</h2>
             <p className="text-muted-foreground mb-8 text-lg">
