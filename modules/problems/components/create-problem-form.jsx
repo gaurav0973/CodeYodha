@@ -52,6 +52,20 @@ const sampledpData = {
   hints:
     "To reach the nth step, you can either come from the (n-1)th step or the (n-2)th step.",
   editorial: "This is a classic dynamic programming problem...",
+  examples: [
+    {
+      input: "n = 2",
+      output: "2",
+      explanation:
+        "There are two ways to climb to the top.\n1. 1 step + 1 step\n2. 2 steps",
+    },
+    {
+      input: "n = 3",
+      output: "3",
+      explanation:
+        "There are three ways to climb to the top.\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step",
+    },
+  ],
   testCases: [
     { input: "2", output: "2" },
     { input: "3", output: "3" },
@@ -124,6 +138,16 @@ const problemSchema = z.object({
   hints: z.string().optional(),
   editorial: z.string().optional(),
 
+  examples: z
+    .array(
+      z.object({
+        input: z.string().min(1, "Input required"),
+        output: z.string().min(1, "Output required"),
+        explanation: z.string().optional(),
+      })
+    )
+    .min(1, "At least one example is required"),
+
   testCases: z
     .array(
       z.object({
@@ -182,6 +206,7 @@ export default function CreateProblemForm() {
       constraints: "",
       hints: "",
       editorial: "",
+      examples: [{ input: "", output: "", explanation: "" }],
       testCases: [{ input: "", output: "" }],
       codeSnippets: { JAVASCRIPT: "", PYTHON: "", JAVA: "" },
       referenceSolution: { JAVASCRIPT: "", PYTHON: "", JAVA: "" },
@@ -191,6 +216,15 @@ export default function CreateProblemForm() {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "testCases",
+  });
+
+  const {
+    fields: exampleFields,
+    append: appendExample,
+    remove: removeExample,
+  } = useFieldArray({
+    control: form.control,
+    name: "examples",
   });
 
   // --- Logic to Load Sample Data ---
@@ -212,7 +246,6 @@ export default function CreateProblemForm() {
         ...data,
         tags: data.tags.split(",").map((t) => t.trim()),
         difficulty: data.difficulty.toUpperCase(),
-        examples: [],
       };
 
       // 2. Make the API Request
@@ -245,6 +278,7 @@ export default function CreateProblemForm() {
         constraints: "",
         hints: "",
         editorial: "",
+        examples: [{ input: "", output: "", explanation: "" }],
         testCases: [{ input: "", output: "" }],
         codeSnippets: { JAVASCRIPT: "", PYTHON: "", JAVA: "" },
         referenceSolution: { JAVASCRIPT: "", PYTHON: "", JAVA: "" },
@@ -321,8 +355,9 @@ export default function CreateProblemForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <Tabs defaultValue="general" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="general">General Info</TabsTrigger>
+              <TabsTrigger value="examples">Examples</TabsTrigger>
               <TabsTrigger value="testcases">Test Cases</TabsTrigger>
               <TabsTrigger value="code">Language & Code</TabsTrigger>
             </TabsList>
@@ -455,7 +490,100 @@ export default function CreateProblemForm() {
               </div>
             </TabsContent>
 
-            {/* TAB 2: TEST CASES */}
+            {/* TAB 2: EXAMPLES */}
+            <TabsContent value="examples" className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Examples</h3>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    appendExample({ input: "", output: "", explanation: "" })
+                  }
+                >
+                  <Plus className="w-4 h-4 mr-2" /> Add Example
+                </Button>
+              </div>
+
+              {exampleFields.map((field, index) => (
+                <Card key={field.id} className="relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 text-muted-foreground hover:text-red-500"
+                    onClick={() => removeExample(index)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name={`examples.${index}.input`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs uppercase text-muted-foreground font-bold">
+                              Input {index + 1}
+                            </FormLabel>
+                            <FormControl>
+                              <Textarea
+                                className="font-mono text-sm bg-muted/50"
+                                rows={2}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`examples.${index}.output`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs uppercase text-muted-foreground font-bold">
+                              Output {index + 1}
+                            </FormLabel>
+                            <FormControl>
+                              <Textarea
+                                className="font-mono text-sm bg-muted/50"
+                                rows={2}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <FormField
+                      control={form.control}
+                      name={`examples.${index}.explanation`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-xs uppercase text-muted-foreground font-bold">
+                            Explanation {index + 1} (Optional)
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea
+                              className="font-mono text-sm bg-muted/50"
+                              rows={2}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            {/* TAB 3: TEST CASES */}
             <TabsContent value="testcases" className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-medium">Test Cases</h3>
