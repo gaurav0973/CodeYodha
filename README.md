@@ -46,3 +46,5 @@ Progress
         - Designing submission schema in DB
         - Fetching user submissions efficiently
         - Displaying submission history with status and timestamps
+
+- Playlist Feature
