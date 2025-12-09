@@ -45,4 +45,4 @@ Progress
     - Challenges faced :
         - Designing submission schema in DB
         - Fetching user submissions efficiently
-        - Displaying submission history with status and timestamps 
+        - Displaying submission history with status and timestamps
