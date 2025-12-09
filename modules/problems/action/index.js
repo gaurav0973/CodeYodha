@@ -8,7 +8,6 @@ import {
   pollAndGetBatchResultsFromJudge0,
 } from "@/lib/judge0";
 
-
 export const getAllProblems = async () => {
   try {
     const user = await currentUser();
@@ -289,5 +288,52 @@ export const submitCode = async ({ code, language, problemId }) => {
   } catch (error) {
     console.error("Error in submitCode:", error);
     return { success: false, error: error.message || "Failed to submit code" };
+  }
+};
+
+export const getAllSubmissionByUserForCurrentProblem = async (problemId) => {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return {
+        success: false,
+        error: "User not authenticated",
+      };
+    }
+
+    const dbUser = await prisma.user.findUnique({
+      where: { clerkId: user.id },
+      select: { id: true },
+    });
+
+    if (!dbUser) {
+      return {
+        success: false,
+        error: "User not found in database",
+      };
+    }
+
+    const submissions = await prisma.submission.findMany({
+      where: {
+        userId: dbUser.id,
+        problemId: problemId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      // Include test case results if needed for detailed view later
+      // include: { testCaseResults: true }
+    });
+
+    return {
+      success: true,
+      data: submissions,
+    };
+  } catch (error) {
+    console.error("Error fetching submissions:", error);
+    return {
+      success: false,
+      error: "Failed to fetch submissions",
+    };
   }
 };
