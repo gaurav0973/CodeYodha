@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import AddToPlaylist from "@/modules/playlist/components/addToPlaylist";
 
 // UI Components
 import {
@@ -239,6 +240,9 @@ export default function ProblemsTable({ problems = [], user }) {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex justify-end items-center gap-2">
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <AddToPlaylist problemId={problem.id} />
+                      </div>
                       <Button
                         size="sm"
                         variant="ghost"

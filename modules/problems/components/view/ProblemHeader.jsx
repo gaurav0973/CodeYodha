@@ -4,9 +4,10 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, List, Settings, User } from "lucide-react";
-import { ModeToggle } from "@/components/ui/mode-toggle"; // Assuming you have this
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import AddToPlaylist from "@/modules/playlist/components/addToPlaylist";
 
-export default function ProblemHeader() {
+export default function ProblemHeader({ problemId }) {
   return (
     <div className="h-14 border-b bg-card flex items-center justify-between px-4 shrink-0">
       <div className="flex items-center gap-4">
@@ -28,6 +29,8 @@ export default function ProblemHeader() {
             <List className="w-4 h-4" /> Problem List
           </Link>
         </Button>
+
+        <AddToPlaylist problemId={problemId} />
 
         <Button variant="ghost" size="icon" disabled>
           <ChevronLeft className="w-4 h-4" />
