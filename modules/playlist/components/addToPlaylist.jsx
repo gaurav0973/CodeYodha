@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Plus, ListPlus, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,32 +20,32 @@ export default function AddToPlaylist({ problemId }) {
   const [newPlaylistName, setNewPlaylistName] = useState("");
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("/api/playlists");
-        if (res.data.success) {
-          // Check if problem is in playlist
-          const playlistsWithStatus = res.data.playlists.map((p) => ({
-            ...p,
-            containsProblem: p.problems.some(
-              (item) => item.problem.id === problemId
-            ),
-          }));
-          setPlaylists(playlistsWithStatus);
-        }
-      } catch (error) {
-        toast.error("Failed to load playlists");
-      } finally {
-        setLoading(false);
+  const fetchPlaylists = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get("/api/playlists");
+      if (res.data.success) {
+        // Check if problem is in playlist
+        const playlistsWithStatus = res.data.playlists.map((p) => ({
+          ...p,
+          containsProblem: p.problems.some(
+            (item) => item.problem.id === problemId
+          ),
+        }));
+        setPlaylists(playlistsWithStatus);
       }
-    };
+    } catch (error) {
+      toast.error("Failed to load playlists");
+    } finally {
+      setLoading(false);
+    }
+  }, [problemId]);
 
+  useEffect(() => {
     if (isOpen) {
       fetchPlaylists();
     }
-  }, [isOpen, problemId]);
+  }, [isOpen, fetchPlaylists]);
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
